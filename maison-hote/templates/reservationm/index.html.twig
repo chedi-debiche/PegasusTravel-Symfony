@@ -1,0 +1,39 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reservationm index{% endblock %}
+
+{% block body %}
+    <h1>Reservationm index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdRes</th>
+                <th>NbChambre</th>
+                <th>NbPersonne</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservationm in reservationms %}
+            <tr>
+                <td>{{ reservationm.idRes }}</td>
+                <td>{{ reservationm.nbChambre }}</td>
+                <td>{{ reservationm.nbPersonne }}</td>
+                <td>{{ reservationm.date }}</td>
+                <td>
+                    <a href="{{ path('app_reservationm_show', {'idRes': reservationm.idRes}) }}">show</a>
+                    <a href="{{ path('app_reservationm_edit', {'idRes': reservationm.idRes}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservationm_new') }}">Create new</a>
+{% endblock %}

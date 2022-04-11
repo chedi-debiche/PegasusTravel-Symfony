@@ -1,0 +1,34 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reservationm{% endblock %}
+
+{% block body %}
+    <h1>Reservationm</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdRes</th>
+                <td>{{ reservationm.idRes }}</td>
+            </tr>
+            <tr>
+                <th>NbChambre</th>
+                <td>{{ reservationm.nbChambre }}</td>
+            </tr>
+            <tr>
+                <th>NbPersonne</th>
+                <td>{{ reservationm.nbPersonne }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reservationm.date }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservationm_index') }}">back to list</a>
+
+    <a href="{{ path('app_reservationm_edit', {'idRes': reservationm.idRes}) }}">edit</a>
+
+    {{ include('reservationm/_delete_form.html.twig') }}
+{% endblock %}

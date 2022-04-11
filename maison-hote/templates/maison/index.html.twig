@@ -1,0 +1,41 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Hello MaisonController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+
+        <table border="1">
+            <thead>
+            <th>Nom du maison</th>
+            <th>Destination du maison</th>
+            <th>Description du maison</th>
+            <th>Prix du maison</th>
+            <th>Modifier une maison</th>
+            <th>Supprimer un Voyage</th>
+            </thead>
+            <tbody>
+            {% for maison in m %}
+                <tr>
+                    <td>{{ maison.nom }}</td>
+                    <td>{{ maison.localisation }}</td>
+                    <td>{{ maison.description }}</td>
+                    <td>{{ maison.prix }}</td>
+                    <td>
+                        <a href="{{ path('modifMaison',{'id':maison.idMaison}) }}">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('supp_maison',{'id':maison.idMaison}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
