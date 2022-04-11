@@ -1,0 +1,37 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reservationv index{% endblock %}
+
+{% block body %}
+    <h1>Reservationv index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idr</th>
+                <th>NbPersonnes</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservationv in reservationvs %}
+            <tr>
+                <td>{{ reservationv.idr }}</td>
+                <td>{{ reservationv.nbPersonnes }}</td>
+                <td>{{ reservationv.date }}</td>
+                <td>
+                    <a href="{{ path('app_reservationv_show', {'idr': reservationv.idr}) }}">show</a>
+                    <a href="{{ path('app_reservationv_edit', {'idr': reservationv.idr}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservationv_new') }}">Create new</a>
+{% endblock %}
