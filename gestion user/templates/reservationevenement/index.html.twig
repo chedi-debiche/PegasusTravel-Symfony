@@ -1,0 +1,36 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reservationevenement index{% endblock %}
+
+{% block body %}
+    <h1>Reservationevenement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th style="text-align: center":>Nom de la réservation </th>
+                <th style="text-align: center">Date de la réservation </th>
+                <th style="text-align: center">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservationevenement in reservationevenements %}
+            <tr>
+
+                <td style="text-align: center">{{ reservationevenement.nomre }}</td>
+                <td style="text-align: center" >{{ reservationevenement.datere ? reservationevenement.datere|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_reservationevenement_new', {'idre': reservationevenement.idre}) }}">ajouter une réservation </a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

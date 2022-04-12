@@ -1,0 +1,63 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Edit Evenement{% endblock %}
+
+{% block body %}
+    <h1>Edit Evenement</h1>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <h5 class="card-header">modifier un  évenement </h5>
+                <div class="card-body">
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">nouveau nom</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="defaultFormControlInput"
+                                placeholder="entrer le nom du l'évenement"
+                                aria-describedby="defaultFormControlHelp"
+                        />
+
+                    </div>
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">nouveau prix</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="defaultFormControlInput"
+                                placeholder="entrer le prix du l'évenement"
+                                aria-describedby="defaultFormControlHelp"
+                        />
+
+                    </div>
+
+                    <div>
+                        <div class="mb-3 row">
+                            <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
+                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary">{{ button_label|default('Save') }}</button>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_evenement_back_index') }}">back to list</a>
+
+    {{ include('evenement_back/_delete_form.html.twig') }}
+{% endblock %}
+
+

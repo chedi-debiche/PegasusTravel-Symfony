@@ -1,0 +1,38 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Evenement {% endblock %}
+
+{% block body %}
+    <h1>Evenement </h1>
+
+    <table class="table" border="1px solid black">
+        <thead>
+             <tr>
+
+                <th>Nom de l'evenement </th>
+                <th>Prix de l'evenement</th>
+                <th>Date</th>
+                <th>actions</th>
+             </tr>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+
+                <td>{{ evenement.nomevent }}</td>
+                <td>{{ evenement.prixevent }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_evenement_back_show', {'idevent': evenement.idevent}) }}"> afficher </a>
+                    <a href="{{ path('app_evenement_back_edit', {'idevent': evenement.idevent}) }}"> modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evenement_back_new') }}">Create new</a>
+{% endblock %}

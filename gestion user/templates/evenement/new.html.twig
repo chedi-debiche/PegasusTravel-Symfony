@@ -1,0 +1,20 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}New account{% endblock %}
+
+{% block body %}
+<div style="display: flex;align-items: center;justify-content: center">
+    {% form_theme form 'foundation_5_layout.html.twig' %}
+    {{ form_start(form) }}
+    <h1>Créer un nouveau évenement </h1>
+
+    {{ include('users/_form.html.twig') }}
+
+    <a href="{{ path('app_users_index') }}">Ajouter a la liste</a>
+    <div class="form-group">{{ form_row(form.nomevent) }}</div>
+    <div class="form-group">{{ form_row(form.prixevent) }}</div>
+    <div class="form-group">{{ form_row(form.date) }}</div>
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
