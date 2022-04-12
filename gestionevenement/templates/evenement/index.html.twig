@@ -1,0 +1,42 @@
+
+{% extends 'baseFront.html.twig' %}
+{% block title %}Evenement {% endblock %}
+
+{% block body %}
+
+
+    <h1 style="text-align: center">Evenement </h1>
+<div class="row">
+    <table class="table" border="1px solid black" >
+        <thead>
+            <tr>
+
+                <th style="text-align: center">Nom de l'evenement </th>
+                <th style="text-align: center">Prix de l'evenement</th>
+                <th style="text-align: center">Date</th>
+                <th style="text-align: center">action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td style="text-align: center">{{ evenement.nomevent }}</td>
+                <td style="text-align: center" >{{ evenement.prixevent }}</td>
+                <td style="text-align: center" >{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+
+                <td style="text-align: center" >
+
+                    <a type="submit" class="btn btn-primary"href="{{ path('app_reservationevenement_new', {'idevent': evenement.idevent}) }}">ajouter une réservation</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
