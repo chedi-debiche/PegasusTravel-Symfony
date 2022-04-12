@@ -1,0 +1,41 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Espace Publication{% endblock %}
+
+{% block body %}
+    <h1> Espaces Publication </h1>
+
+    <table class="table" border="1" aria-colspan="1">
+
+        <thead>
+            <tr>
+                <th>Idpub</th>
+                <th>Datepub</th>
+                <th>Path</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            <tr>
+                <td>{{ publication.idpub }}</td>
+                <td>{{ publication.datepub ? publication.datepub|date('Y-m-d') : '' }}</td>
+                <td>{{ publication.path }}</td>
+                <td>{{ publication.description }}</td>
+                <td>
+                    <a type="submit" class="btn btn-primary "  href="{{ path('app_publication_show', {'idpub': publication.idpub}) }}">show</a>
+                    <a type="submit" class="btn btn-primary " href="{{ path('app_publication_edit', {'idpub': publication.idpub}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a type="submit" class="btn btn-primary "  href="{{ path('app_publication_new') }}">Create new</a>
+{% endblock %}

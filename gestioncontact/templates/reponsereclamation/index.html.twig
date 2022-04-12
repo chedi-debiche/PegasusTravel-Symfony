@@ -1,0 +1,35 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Reponsereclamation index{% endblock %}
+
+{% block body %}
+    <h1>Reponsereclamation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idrep</th>
+                <th>Reponse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponsereclamation in reponsereclamations %}
+            <tr>
+                <td>{{ reponsereclamation.idrep }}</td>
+                <td>{{ reponsereclamation.reponse }}</td>
+                <td>
+                    <a type="submit" class="btn btn-primary " href="{{ path('app_reponsereclamation_show', {'idrep': reponsereclamation.idrep}) }}">show</a>
+                    <a type="submit" class="btn btn-primary " href="{{ path('app_reponsereclamation_edit', {'idrep': reponsereclamation.idrep}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a type="submit" class="btn btn-primary " href="{{ path('app_reponsereclamation_new') }}">Create new</a>
+{% endblock %}

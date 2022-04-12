@@ -1,0 +1,47 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Reclamation index{% endblock %}
+
+{% block body %}
+    <h1> Espace Reclamation </h1>
+
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Commentaire</th>
+                <th>Datereclamation</th>
+                <th>Typereclamation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.numero }}</td>
+                <td>{{ reclamation.nom }}</td>
+                <td>{{ reclamation.prenom }}</td>
+                <td>{{ reclamation.email }}</td>
+                <td>{{ reclamation.commentaire }}</td>
+                <td>{{ reclamation.datereclamation ? reclamation.datereclamation|date('Y-m-d') : '' }}</td>
+                <td>{{ reclamation.typereclamation }}</td>
+                <td>
+                    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_show', {'numero': reclamation.numero}) }}">show</a>
+                    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_edit', {'numero': reclamation.numero}) }}">edit</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_index') }}">back to list</a>
+    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_new') }}">Create new</a>
+
+{% endblock %}
