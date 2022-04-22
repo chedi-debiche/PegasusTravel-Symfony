@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Form;
-
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class MaisonType extends AbstractType
 {
@@ -17,7 +20,7 @@ class MaisonType extends AbstractType
             ->add('localisation')
             ->add('description')
             ->add('prix')
-            ->add('imageMaison')
+            ->add('imageMaison',FileType::class, array('data_class' => null,'required' => false))
             ->add('ajouter',SubmitType::class)
 
         ;

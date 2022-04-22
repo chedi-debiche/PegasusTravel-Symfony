@@ -39,12 +39,11 @@
                     </div>
                     {{ form_errors(f.prix,{'attr':{'class':'text-danger'}}) }}
 
-                    <label for="inputText" class="col-sm-4 col-form-label">image</label>
+                    <label for="inputText" class="col-sm-8 col-form-label">Image</label>
                     <div class="col-sm-10">
-                        {{ form_widget(f.imageMaison,{'attr':{'class':'form-control'}}) }}
-
+                        {{ form_widget(f.imageMaison , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom du fichier'}} ) }}
+                        {{ form_errors(f.imageMaison) }}
                     </div>
-                    {{ form_errors(f.imageMaison,{'attr':{'class':'text-danger'}}) }}
 
                     <br/>
                     <div class="col-sm-10" style="display: flex;align-items: center;justify-content: center">

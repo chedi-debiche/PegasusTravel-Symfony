@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Reservationm
@@ -22,20 +24,24 @@ class Reservationm
     private $idRes;
 
     /**
+     * @Assert\NotBlank(message=" nombre chambre doit etre non vide")
      * @var int
+     * @Assert\Positive
+
      *
      * @ORM\Column(name="nb_chambre", type="integer", nullable=false)
      */
     private $nbChambre;
 
     /**
-     * @var int
-     *
+     * @Assert\NotBlank(message=" nombre personne doit etre non vide")
+     * @Assert\Positive
      * @ORM\Column(name="nb_personne", type="integer", nullable=false)
      */
     private $nbPersonne;
 
     /**
+     * @Assert\NotBlank(message=" Date doit etre non vide")
      * @var string
      *
      * @ORM\Column(name="date", type="string", length=50, nullable=false)
@@ -43,6 +49,8 @@ class Reservationm
     private $date;
 
     /**
+     * @Assert\NotBlank(message=" numero maison doit etre non vide")
+
      * @var \Maisonh
      *
      * @ORM\ManyToOne(targetEntity="Maisonh")

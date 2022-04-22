@@ -3,7 +3,7 @@
 {% block title %}Reservationm{% endblock %}
 
 {% block body %}
-    <h1>Reservationm</h1>
+    <h1>Reservation maison : </h1>
 
     <table class="table">
         <tbody>
@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reservationm_index') }}">back to list</a>
+    <a href="{{ path('app_reservationm_index') }}">retour</a>
 
-    <a href="{{ path('app_reservationm_edit', {'idRes': reservationm.idRes}) }}">edit</a>
+    <a href="{{ path('app_reservationm_edit', {'idRes': reservationm.idRes}) }}">modifier </a>
 
     {{ include('reservationm/_delete_form.html.twig') }}
 {% endblock %}

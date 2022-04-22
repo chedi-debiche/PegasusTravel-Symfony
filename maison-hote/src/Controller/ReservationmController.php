@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use App\Entity\Reservationm;
 use App\Form\ReservationmType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/reservationm")
+ * @Route("/")
  */
 class ReservationmController extends AbstractController
 {
@@ -25,6 +26,20 @@ class ReservationmController extends AbstractController
             ->findAll();
 
         return $this->render('reservationm/index.html.twig', [
+            'reservationms' => $reservationms,
+        ]);
+    }
+
+    /**
+     * @Route("/Adminm", name="app_reservationm_affiche", methods={"GET"})
+     */
+    public function indexaffiche(EntityManagerInterface $entityManager): Response
+    {
+        $reservationms = $entityManager
+            ->getRepository(Reservationm::class)
+            ->findAll();
+
+        return $this->render('reservationm/afficheReservationm.html.twig', [
             'reservationms' => $reservationms,
         ]);
     }
@@ -61,6 +76,8 @@ class ReservationmController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/{idRes}/edit", name="app_reservationm_edit", methods={"GET", "POST"})
      */
@@ -93,4 +110,20 @@ class ReservationmController extends AbstractController
 
         return $this->redirectToRoute('app_reservationm_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    /**
+     * @Route("/remove/{idRes}", name="app_reservationm_deletee")
+     */
+    public function deletereservation(Reservationm $reservationvs): Response
+    {
+        $em=$this->getDoctrine()->getManager();
+        $em->remove($reservationvs);
+        $em->flush();
+
+        return $this->redirectToRoute('app_reservationm_affiche');
+    }
+
+
+
 }
