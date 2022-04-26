@@ -7,6 +7,7 @@
     <meta name="description" content="" />
     <meta name="author" content="front-office/http://webthemez.com" />
     <!-- css -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
     <link href="{{ asset('front-office/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('front-office/css/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
     <link href="{{ asset('front-office/css/flexslider.css') }}" rel="stylesheet" />
@@ -44,7 +45,8 @@
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
+                       <!-- <li class="active"><a href="index.html">Home</a></li>-->
+                        <li><a href="portfolio.html">Home</a></li>
                         <li class="dropdown">
                             <a href="front-office/#" data-toggle="dropdown" class="dropdown-toggle">About Us <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -54,7 +56,7 @@
                                 <li><a href="#">Investors</a></li>
                             </ul>
                         </li>
-                        <li><a href="services.html">Voyages</a></li>
+                        <li class="active"><a href="{{path ('app_voyageF') }}">Voyages</a></li>
                         <li><a href="portfolio.html">Maisons d'hotes</a></li>
                         <li><a href="pricing.html">Evenements</a></li>
                         <li><a href="contact.html">Contact</a></li>
@@ -478,5 +480,10 @@
 <script src="{{ asset('front-office/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('front-office/js/animate.js') }}"></script>
 <script src="{{ asset('front-office/js/custom.js') }}"></script>
+<script src="//code.jquery.com/jquery.js"></script>
+<!-- Load Flashy default JavaScript -->
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+<!-- Include Flashy default partial -->
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Voyage
@@ -22,6 +23,12 @@ class Voyage
     private $id;
 
     /**
+     * @Assert\NotBlank(message=" le nom doit etre non vide")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage=" Entrer un nom au mini de 3 caracteres"
+     *
+     *     )
      * @var string
      *
      * @ORM\Column(name="Nom", type="string", length=150, nullable=false)
@@ -29,6 +36,12 @@ class Voyage
     private $nom;
 
     /**
+     * @Assert\NotBlank(message=" destination doit etre non vide")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage=" Entrer une destination au mini de 3 caracteres"
+     *
+     *     )
      * @var string
      *
      * @ORM\Column(name="Destination", type="string", length=30, nullable=false)
@@ -36,6 +49,12 @@ class Voyage
     private $destination;
 
     /**
+     * @Assert\NotBlank(message=" description doit etre non vide")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage=" Entrer une description au mini de 3 caracteres"
+     *
+     *     )
      * @var string
      *
      * @ORM\Column(name="Description", type="string", length=2000, nullable=false)
@@ -43,6 +62,12 @@ class Voyage
     private $description;
 
     /**
+     * @Assert\NotBlank(message=" prix doit etre non vide")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage=" Entrer un prix au mini de 3 caracteres"
+     *
+     *     )
      * @var int
      *
      * @ORM\Column(name="Prix", type="integer", nullable=false)
@@ -50,6 +75,12 @@ class Voyage
     private $prix;
 
     /**
+     * @Assert\NotBlank(message=" image doit etre non vide")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage=" Entrer une image au mini de 3 caracteres"
+     *
+     *     )
      * @var string
      *
      * @ORM\Column(name="Image", type="string", length=150, nullable=false)
@@ -109,12 +140,12 @@ class Voyage
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage($image)
     {
         $this->image = $image;
 

@@ -99,15 +99,24 @@ ul.withArrow li{
 	
 }
 ul.withArrow li span{
-	margin-right: 10px;
-	font-weight: 700;
-	color: #a0b005;
-	border: 1px solid;
-	padding: 4px 8px;
-	font-size: 11px;
-	border-radius: 50%;
-	height: 20px;
-	width: 20px;
+	
+margin-right: 10px;
+	
+font-weight: 700;
+	
+color: #a0b005;
+	
+border: 1px solid;
+	
+padding: 4px 8px;
+	
+font-size: 11px;
+	
+border-radius: 50%;
+	
+height: 20px;
+	
+width: 20px;
 }
 .widget {
     color: rgba(255, 255, 255, 0.77);
@@ -411,7 +420,7 @@ display: inline-block;
 }
 
 .content-3-10 .image-container .background-image-holder {
-	background: url('../img/service1.jpg') no-repeat center center;
+	background: url('../img/tunisair.jpg') no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -904,7 +913,7 @@ form#commentform textarea {
 }
 
 #call-to-action-2 {
-	background-color: #CDDC39;
+	background-color: #080808;
 	padding: 30px 0;
 }
 #call-to-action-2 h3 {
