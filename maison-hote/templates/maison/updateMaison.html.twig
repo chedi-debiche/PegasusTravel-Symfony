@@ -1,7 +1,9 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block body %}
- <!--   <style>
+    <script src="{{asset('dark.js')}}"></script>
+
+    <!--   <style>
         body {
             background-image: url('back.jpg');
             background-repeat: no-repeat;
@@ -22,6 +24,8 @@
                     <div class="col-sm-10">
                         {{ form_widget(f.nom,{'attr':{'class':'form-control'}}) }}
                     </div>
+                    {{ form_errors(f.nom,{'attr':{'class':'text-danger'}}) }}
+
 
 
                     <label for="inputText" class="col-sm-4 col-form-label">localisation</label>
@@ -29,20 +33,28 @@
                         {{ form_widget(f.localisation,{'attr':{'class':'form-control'}}) }}
 
                     </div>
+                    {{ form_errors(f.localisation,{'attr':{'class':'text-danger'}}) }}
+
                     <label for="inputText" class="col-sm-4 col-form-label">Description</label>
                     <div class="col-sm-10">
                         {{ form_widget(f.description,{'attr':{'class':'form-control'}}) }}
                     </div>
+                    {{ form_errors(f.description,{'attr':{'class':'text-danger'}}) }}
+
 
                     <label for="inputText" class="col-sm-4 col-form-label">prix </label>
                     <div class="col-sm-10">
                         {{ form_widget(f.prix,{'attr':{'class':'form-control'}}) }}
                     </div>
+                    {{ form_errors(f.prix,{'attr':{'class':'text-danger'}}) }}
+
 
                     <label for="inputText" class="col-sm-4 col-form-label">image maison </label>
                     <div class="col-sm-10">
-                        {{ form_widget(f.imageMaison,{'attr':{'class':'form-control'}}) }}
+                        {{ form_widget(f.imageMaison , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom du fichier'}} ) }}
+                        {{ form_errors(f.imageMaison) }}
                     </div>
+
 
                     <br/>
                     <div class="col-sm-10" style="display: flex;align-items: center;justify-content: center">
@@ -58,6 +70,20 @@
         </div>
 
     </div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
 
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        new Darkmode({
+            bottom: '60px',
+            right: '32px',
+            time: '0.5s',
+            label: '🌙'
+        }).showWidget();
+    </script>
 
 {% endblock %}

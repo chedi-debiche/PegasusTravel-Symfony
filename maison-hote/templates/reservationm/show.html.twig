@@ -25,10 +25,14 @@
             </tr>
         </tbody>
     </table>
+    <a class="btn btn-primary" href="{{ path('imprimreservationm') }}">Imprimer votre réservation</a>
+
 
     <a href="{{ path('app_reservationm_index') }}">retour</a>
 
     <a href="{{ path('app_reservationm_edit', {'idRes': reservationm.idRes}) }}">modifier </a>
+
+
 
     {{ include('reservationm/_delete_form.html.twig') }}
 {% endblock %}

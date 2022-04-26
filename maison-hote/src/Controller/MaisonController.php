@@ -13,6 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
 
 
 
@@ -23,21 +26,35 @@ class MaisonController extends AbstractController
     /**
      * @Route("/BackMaison", name="app_maison")
      */
-    public function index(): Response
+
+    public function index(FlashyNotifier $flashy): Response
     {
         $maison = $this->getDoctrine()->getManager()->getRepository(Maisonh::class)->findAll();
-        return $this->render('maison/index.html.twig', [
-            'm'=>$maison
-        ]);
+        $flashy->success('Bienvenue à pegasus Travel back office :) !');
+
+        return $this->redirectToRoute('Recherche',array('m' => $maison));
+      //  return $this->render('maison/index.html.twig', array('m' => $maison));
+
+
+
     }
+
+
 
     /**
      * @Route("/FrontMaison", name="app_maisonF")
      */
-    public function indexFrontMaison(): Response
-    {
 
+
+    public function indexFrontMaison(Request $request, PaginatorInterface $paginator ,FlashyNotifier $flashy): Response
+    {
         $maison = $this->getDoctrine()->getManager()->getRepository(Maisonh::class)->findAll();
+        $maison = $paginator->paginate(
+            $maison, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            3/*limit per page*/
+        );
+        $flashy->success('Bienvenue à la liste des maisons dhote de pegasus travel :) !');
 
         return $this->render('maisonFront/index.html.twig', [
             'm'=>$maison
@@ -50,7 +67,7 @@ class MaisonController extends AbstractController
     /**
      * @Route("/addMaison", name="addMaison")
      */
-    public function addMaison(Request $request): Response
+    public function addMaison(Request $request ): Response
     {
         $maison = new Maisonh();
         $form = $this->createForm(MaisonType::class,$maison);
@@ -68,19 +85,25 @@ class MaisonController extends AbstractController
             return $this->redirectToRoute('app_maison');
 
         }
+
         return $this->render('maison/ajouterMaison.html.twig',['f'=>$form->createView()]);
     }
 
     /**
      * @Route("/removemaison/{id}", name="supp_maison")
      */
-    public function supprimerMaison(Maisonh $maison): Response
+    public function supprimerMaison(Maisonh $maison,FlashyNotifier $flashy): Response
     {
         $em=$this->getDoctrine()->getManager();
         $em->remove($maison);
+
         $em->flush();
+
         return $this->redirectToRoute('app_maison');
+        $flashy->success('maison supprimé avec succés');
+
     }
+
 
     /**
      * @Route("/imprimmaison", name="imprimmaison")
@@ -129,6 +152,10 @@ class MaisonController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            $file = $maison->getImageMaison();
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('uploads_directory'),$filename);
+            $maison->setImageMaison($filename);
             $em=$this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('app_maison');
@@ -141,18 +168,18 @@ class MaisonController extends AbstractController
      */
     public function Tri(Request $request)
     {
+
         $em = $this->getDoctrine()->getManager();
 
 
         $query = $em->createQuery(
+
             'SELECT m FROM App\Entity\Maisonh m
             ORDER BY m.nom '
+
         );
 
         $maison = $query->getResult();
-
-
-
         return $this->render('maison/index.html.twig',
             array('m' => $maison));
 
@@ -182,7 +209,7 @@ class MaisonController extends AbstractController
     /**
      * @Route("/statmaison", name="statmaison")
      */
-    public function stat()
+    public function stat(FlashyNotifier $flashy)
     {
 
         $repository = $this->getDoctrine()->getRepository(Maisonh::class);
@@ -218,13 +245,36 @@ class MaisonController extends AbstractController
         $pieChart->getOptions()->setHeight(500);
         $pieChart->getOptions()->setWidth(900);
         $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
-        $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('green');
         $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
         $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
         $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
+        $flashy->primaryDark('statistique des prix des maisons !');
+
         return $this->render('maison/statMaison.html.twig', array('piechart' => $pieChart));
     }
 
+
+
+    /**
+     * @Route("/Recherche", name="Recherche")
+     */
+   public function rechercheByName(Request $request,FlashyNotifier $flashy)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $maison=$em->getRepository(Maisonh::class)->findAll();
+        if($request->isMethod("POST"))
+        {
+            $nom = $request->get('nom');
+            $maison=$em->getRepository(Maisonh::class)->findBy(array('nom'=>$nom));
+        }
+        $flashy->success('Bienvenue à pegasus Travel back office :) !');
+
+        return $this->render('maison/index.html.twig', array('m' => $maison));
+    //    return $this->redirectToRoute('Recherche',array('m' => $maison));
+
+
+    }
 
 }

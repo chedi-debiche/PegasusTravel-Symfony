@@ -1,11 +1,19 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}Reservationm index{% endblock %}
+{% block title %}Reservationm index
+
+
+
+
+{% endblock %}
 
 {% block body %}
+
+
+
     <h1>Listes des réservations : </h1>
 
-    <table class="table">
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>IdRes</th>
@@ -15,7 +23,7 @@
             <th>actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
         {% for reservationm in reservationms %}
             <tr>
                 <td>{{ reservationm.idRes }}</td>
@@ -37,5 +45,8 @@
 
         </tbody>
     </table>
+    <div id="google_translate_element"></div>
+
+
 
 {% endblock %}
