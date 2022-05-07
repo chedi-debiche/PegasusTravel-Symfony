@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Form\Evenement1Type;
+use App\Repository\EvenementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/evenement/back")
@@ -18,14 +20,15 @@ class EvenementBackController extends AbstractController
     /**
      * @Route("/", name="app_evenement_back_index", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager ,EvenementRepository $repo ): Response
     {
+        $upcoming =$repo->select();
         $evenements = $entityManager
             ->getRepository(Evenement::class)
             ->findAll();
-
         return $this->render('evenement_back/index.html.twig', [
             'evenements' => $evenements,
+            'coming'    => $upcoming ,
         ]);
     }
 
@@ -92,5 +95,74 @@ class EvenementBackController extends AbstractController
         }
 
         return $this->redirectToRoute('app_evenement_back_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/r/search_back1", name="search_back1",methods={"GET"})
+     */
+
+    public function search_back1(Request $request,EvenementRepository $evenementRepository): Response
+    {
+
+        $requestString = $request->get('searchValue');
+        $Reclamations = $evenementRepository->findTeamwithNumber($requestString);
+        $responseArray = [];
+        $idx = 0;
+
+        foreach ($Reclamations as $Evenement) {
+            $temp = [
+                'nomevent' => $Evenement->getNomevent(),
+                'prixevent' => $Evenement->getPrixevent(),
+                'date' => $Evenement->getDate()->format(' Y-m-d'),
+
+            ];
+
+            $responseArray[$idx++] = $temp;
+        }
+        return new JsonResponse($responseArray);
+    }
+    /**
+     * @Route("DOWNtriEQUIPE", name="DOWNtriEQUIPE",options={"expose"=true})
+     */
+    public function DOWNtriEQUIPE(Request $request,EvenementRepository $repository): JsonResponse
+    {
+
+        $UPorDOWN=$request->get('order');
+        $Reclamations=$repository->DescEvenementSearch($UPorDOWN);
+        $responseArray = [];
+        $idx = 0;
+        foreach ($Reclamations as $Evenement){
+            $temp =  [
+                'nomevent' => $Evenement->getNomevent(),
+                'prixevent' => $Evenement->getPrixevent(),
+                'date' => $Evenement->getDate()->format(' Y-m-d'),
+            ];
+
+            $responseArray[$idx++] = $temp;
+
+        }
+        return new JsonResponse($responseArray);
+    }
+
+    /**
+     * @Route("UPtriEQUIPE", name="UPtriEQUIPE",options={"expose"=true})
+     */
+    public function UPtriEQUIPE(Request $request,EvenementRepository $repository): JsonResponse
+    {
+
+
+        $UPorDOWN=$request->get('order');
+        $Reclamations=$repository->AscEvenementSearch($UPorDOWN);
+        $responseArray = [];
+        $idx = 0;
+        foreach ($Reclamations as $Evenement){
+            $temp = [
+                'nomevent' => $Evenement->getNomevent(),
+                'prixevent' => $Evenement->getPrixevent(),
+                'date' => $Evenement->getDate()->format(' Y-m-d'),
+            ];
+            $responseArray[$idx++] = $temp;
+        }
+        return new JsonResponse($responseArray);
     }
 }

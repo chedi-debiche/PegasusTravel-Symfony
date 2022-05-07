@@ -16,12 +16,7 @@ class ReservationevenementType extends AbstractType
         $builder
             ->add('nomre')
             ->add('datere')
-            ->add('idevent', EntityType::class , [
-                'class'=> Evenement::class,
-                'choice_label'=>'idEvent',
-                'multiple'=>false,
-                'expanded'=>false ,
-            ])
+
 
         ;
     }

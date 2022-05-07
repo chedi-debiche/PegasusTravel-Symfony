@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options ;
+use App\Repository\EvenementRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/evenement")
@@ -18,14 +22,18 @@ class EvenementController extends AbstractController
     /**
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager ,Request $request ,PaginatorInterface $paginator): Response
     {
         $evenements = $entityManager
             ->getRepository(Evenement::class)
             ->findAll();
-
+        $evenement = $paginator->paginate(
+            $evenements, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            6 // Nombre de résultats par page
+        );
         return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenements,
+            'evenement' => $evenement,
         ]);
     }
 
@@ -86,11 +94,82 @@ class EvenementController extends AbstractController
      */
     public function delete(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getIdevent(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getIdevent(), $request->request->get('_token'))) {
             $entityManager->remove($evenement);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("imp", name="impr")
+     */
+    public function imprimer(EvenementRepository $repository, EntityManagerInterface $entityManager): Response
+
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        $evenements = $entityManager
+            ->getRepository(Evenement::class)
+            ->findAll();
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('evenement/pdf.html.twig', [
+            'evenement' => $evenements,
+        ]);
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("Liste  Evenement.pdf", [
+            "Attachment" => true
+
+        ]);
+    }
+
+    /**
+     * @param ProduitRepository $repository
+     * @return Response
+     * @Route ("tri",name="tri")
+     */
+    function Order(EvenementRepository  $repository,Request $request, PaginatorInterface $paginator){
+        $donnees=$repository->Order();
+        $evenement = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            6 // Nombre de résultats par page
+        );
+        return $this->render("evenement/index.html.twig",[
+            'evenement'=>$evenement
+
+        ]);
+    }
+    /**
+     * @Route("filter", name="filter")
+     */
+    public function Filter( EvenementRepository $repo ,Request $request ,PaginatorInterface $paginator) : Response
+    {
+        $prix = $_GET['prix'];
+        $data = $repo->Filter($prix);
+        $evnement = $paginator->paginate(
+            $data, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            6 // Nombre de résultats par page
+        );
+
+        return $this->render('evenement/index.html.twig', [
+            'evenement' => $evnement
+        ]);  }
 }

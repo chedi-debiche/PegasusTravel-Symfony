@@ -46,7 +46,7 @@ class Reservationevenement
      */
     private $idevent;
 
-    public function getIdre(): ?int
+    public function getIdre():?int
     {
         return $this->idre;
     }

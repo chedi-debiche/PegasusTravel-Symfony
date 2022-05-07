@@ -2,19 +2,31 @@
 
 namespace App\Controller;
 
+use App\Entity\Evenement;
 use App\Entity\Reservationevenement;
 use App\Form\ReservationevenementType;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Repository\EvenementRepository ;
+use App\Notification\NouveauCompteNotification;
 /**
  * @Route("/reservationevenement")
  */
 class ReservationevenementController extends AbstractController
 {
+    /**
+     * @var NouveauCompteNotification
+     */
+    private $notify_creation;
+
+    public function __construct(NouveauCompteNotification $notify_creation)
+    {
+        $this->notify_creation = $notify_creation;
+    }
     /**
      * @Route("/", name="app_reservationevenement_index", methods={"GET"})
      */
@@ -29,28 +41,29 @@ class ReservationevenementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="app_reservationevenement_new", methods={"GET", "POST"})
+   /**
+    *  @param Integer $idevent
+    * @param EvenementRepository $rep
+     * @Route("/{idevent}/new", name="app_reservationevenement_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        public function new(Request $request, EntityManagerInterface $entityManager , $idevent,EvenementRepository $rep,Evenement $evenement): Response
+    {   $event = $rep->find($idevent);
         $reservationevenement = new Reservationevenement();
         $form = $this->createForm(ReservationevenementType::class, $reservationevenement);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+           $reservationevenement->setIdevent($event);
             $entityManager->persist($reservationevenement);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_reservationevenement_index', [], Response::HTTP_SEE_OTHER);
+            $this->notify_creation->notify();
+            $this->addFlash("success","votre réservation a été ajoutée avec succées");
+            return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('reservationevenement/new.html.twig', [
             'reservationevenement' => $reservationevenement,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{idre}", name="app_reservationevenement_show", methods={"GET"})
      */

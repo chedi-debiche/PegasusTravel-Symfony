@@ -4,7 +4,11 @@
 
 {% block body %}
     <h1>Evenement</h1>
-
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" style="text-align: center">
+            {{ message }}
+        </div>
+    {% endfor %}
     <table class="center-block">
         <tbody>
             <tr>
