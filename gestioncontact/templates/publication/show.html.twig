@@ -6,19 +6,16 @@
 
     <h1>Publication</h1>
 
-    <table class="table">
+    <table class="table" border="2"style="margin:auto">
         <tbody>
-            <tr>
-                <th>Idpub</th>
-                <td>{{ publication.idpub }}</td>
-            </tr>
+
             <tr>
                 <th>Datepub</th>
                 <td>{{ publication.datepub ? publication.datepub|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Path</th>
-                <td>{{ publication.path }}</td>
+                <th>Image</th>
+                <td><img class= "img-rounded" src=" {{ asset('uploads/'~publication.path) }}"></td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -27,10 +24,10 @@
         </tbody>
     </table>
 
-    <a type="submit" class="btn btn-sm btn-outline-primary" href="{{ path('app_publication_index') }}">back to list</a>
+    <a type="submit" class="btn btn-primary " style="margin: 15px"  href="{{ path('app_publication_index') }}">back to list</a>
 
-    <a type="submit" class="btn btn-sm btn-outline-primary" href="{{ path('app_publication_edit', {'idpub': publication.idpub}) }}">edit</a>
+    <a type="submit" class="btn btn-primary " style="margin: 15px"  href="{{ path('app_publication_edit', {'idpub': publication.idpub}) }}">edit</a>
 
-    {{ include('publication/_delete_form.html.twig') }}
+   {{ include('publication/_delete_form.html.twig') }}
 
 {% endblock %}

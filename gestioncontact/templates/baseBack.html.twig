@@ -17,12 +17,29 @@
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+    <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+            style="align-content: center"
+    >
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+            </a>
         </div>
-    </form>
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <div class="content-wrapper">
+                <div class="navbar-nav align-items-center">
+                    <form class="align-content-center" action="{{ path("search") }}" method="get" style="align-items: center">
+                        <label>  <input value="" id="search" name="nom" type="text" class="form-control border-0 shadow-none " placeholder="search .. "> </label>
+                        <button class="btn btn-primary  ">search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </nav>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
@@ -94,7 +111,7 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         Evenement
                     </a>
-                    <a class="nav-link" href="tables.html">
+                    <a class="nav-link"  href="{{ path('app_publication_index') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Contact
                     </a>

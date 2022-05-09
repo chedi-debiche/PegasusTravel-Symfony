@@ -5,37 +5,44 @@
 {% block body %}
     <h1> Espaces Publication </h1>
 
-    <table class="table" border="1" aria-colspan="1">
 
-        <thead>
-            <tr>
-                <th>Idpub</th>
-                <th>Datepub</th>
-                <th>Path</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
+
         <tbody>
-        {% for publication in publications %}
-            <tr>
-                <td>{{ publication.idpub }}</td>
-                <td>{{ publication.datepub ? publication.datepub|date('Y-m-d') : '' }}</td>
-                <td>{{ publication.path }}</td>
-                <td>{{ publication.description }}</td>
-                <td>
-                    <a type="submit" class="btn btn-primary "  href="{{ path('app_publication_show', {'idpub': publication.idpub}) }}">show</a>
-                    <a type="submit" class="btn btn-primary " href="{{ path('app_publication_edit', {'idpub': publication.idpub}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
+        <div class="row" style="margin-left: 20px">
+            {% for publication in publications %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card" style="margin-bottom: 20px">
 
-        {% endfor %}
+
+                        <td> <img class="img-rounded" src="{{ asset('uploads/' ~ publication.path) }}" alt="" width="300" height="200" style="margin: 20px"></td>
+
+                        <div class="card-body" style="margin-left: 80px">
+                            <th>  <p> <td > Date :{{ publication.datepub ? publication.datepub|date('Y-m-d') : '' }}</td></p></th>
+                            <p>
+                            <h5 style="font-size: large" class="card-title">Description :{{ publication.description |raw}}</h5>
+                            </p>
+
+                        </div>
+
+                            <a type="submit" class="btn btn-primary " style="margin: 15px" href="{{ path('app_publication_show', {'idpub': publication.idpub}) }}">show</a>
+                            <a type="submit" class="btn btn-primary " style="margin: 15px" href="{{ path('app_publication_edit', {'idpub': publication.idpub}) }}">edit</a>
+
+                        <div class="card-footer" >
+                            <div class="row " style="margin: 10px"  >
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
         </tbody>
-    </table>
+
 
     <a type="submit" class="btn btn-primary "  href="{{ path('app_publication_new') }}">Create new</a>
+
 {% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Reclamation;
+use Doctrine\DBAL\Types\TextType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +22,7 @@ class Reclamation1Type extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')
-            ->add('commentaire')
+            ->add('commentaire', CKEditorType::class )
             ->add('datereclamation')
 
             ->add('typereclamation', ChoiceType::class,array(

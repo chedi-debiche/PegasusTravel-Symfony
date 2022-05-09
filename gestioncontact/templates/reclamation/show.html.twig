@@ -7,10 +7,7 @@
 
     <table class="table" border="2"  >
         <tbody>
-            <tr>
-                <th>Numero</th>
-                <td>{{ reclamation.numero }}</td>
-            </tr>
+
             <tr>
                 <th>Nom</th>
                 <td>{{ reclamation.nom }}</td>
@@ -38,9 +35,9 @@
         </tbody>
     </table>
 
-    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_index') }}">back to list</a>
+    <a type="submit" class="btn btn-primary " style="background-color: white ;margin-bottom: 15px;width: 250px;"href="{{ path('app_reclamation_index') }}">back to list</a>
 
-    <a type="submit" class="btn btn-primary " href="{{ path('app_reclamation_edit', {'numero': reclamation.numero}) }}" >edit</a>
+    <a type="submit" class="btn btn-primary "style="background-color: white ;margin-bottom: 15px;width: 250px;" href="{{ path('app_reclamation_edit', {'numero': reclamation.numero}) }}" >edit</a>
 
     {{ include('reclamation/_delete_form.html.twig') }}
 {% endblock %}

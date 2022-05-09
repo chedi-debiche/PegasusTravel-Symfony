@@ -64,12 +64,12 @@ class Publication
         return $this;
     }
 
-    public function getPath(): ?string
+    public function getPath()
     {
         return $this->path;
     }
 
-    public function setPath(string $path): self
+    public function setPath( $path)
     {
         $this->path = $path;
 
